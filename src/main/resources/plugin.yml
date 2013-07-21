@@ -1,0 +1,5 @@
+name: NoEntityTeleport
+main: net.daboross.bukkitdev.noentityteleport.NoEntityTeleport
+version: 1.0
+author: Dabo Ross
+description: Stops entities from going through portals

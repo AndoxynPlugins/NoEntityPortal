@@ -23,6 +23,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,19 +32,19 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author daboross
  */
 public class NoEntityTeleport extends JavaPlugin implements Listener {
-    
+
     private boolean debug = false;
-    
+
     @Override
     public void onEnable() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }
-    
+
     @Override
     public void onDisable() {
     }
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equals("debugnet")) {
@@ -54,12 +55,14 @@ public class NoEntityTeleport extends JavaPlugin implements Listener {
         }
         return true;
     }
-    
+
     @EventHandler(priority = EventPriority.HIGH)
-    public void onEntityTeleport(EntityPortalEvent epe) {
-        if (debug) {
-            getLogger().log(Level.INFO, "Teleport event from {0} to {1} for entity {2} was canceled", new Object[]{epe.getFrom().getWorld().getName(), epe.getTo().getWorld().getName(), epe.getEntityType()});
+    public void onEntityTeleport(EntityTeleportEvent evt) {
+        if (!evt.getFrom().getWorld().equals(evt.getTo().getWorld())) {
+            if (debug) {
+                getLogger().log(Level.INFO, "Teleport event from {0} to {1} for entity {2} was canceled", new Object[]{evt.getFrom().getWorld().getName(), evt.getTo().getWorld().getName(), evt.getEntityType()});
+            }
+            evt.setCancelled(true);
         }
-        epe.setCancelled(true);
     }
 }

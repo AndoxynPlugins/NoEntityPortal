@@ -3,3 +3,7 @@ main: net.daboross.bukkitdev.noentityteleport.NoEntityTeleport
 version: ${project.version}
 author: Dabo Ross
 description: Stops entities from going through portals
+commands:
+  debugnet:
+    description: Toggles debug mode for NoEntityTeleport
+    permission: noentityteleport.admin

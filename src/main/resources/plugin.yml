@@ -1,5 +1,5 @@
 name: ${project.name}
-main: net.daboross.bukkitdev.noentityteleport.NoEntityTeleport
+main: net.daboross.bukkitdev.noentityteleport.NoEntityTeleportPlugin
 version: ${project.version}
 author: Dabo Ross
 description: Stops entities from going through portals

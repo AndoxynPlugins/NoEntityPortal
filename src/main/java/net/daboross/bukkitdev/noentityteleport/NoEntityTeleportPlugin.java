@@ -16,6 +16,7 @@
  */
 package net.daboross.bukkitdev.noentityteleport;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,12 +26,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.MetricsLite;
 
 /**
  *
  * @author daboross
  */
-public class NoEntityTeleport extends JavaPlugin implements Listener {
+public class NoEntityTeleportPlugin extends JavaPlugin implements Listener {
 
     private boolean debug = false;
 
@@ -38,6 +40,15 @@ public class NoEntityTeleport extends JavaPlugin implements Listener {
     public void onEnable() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
+        MetricsLite metrics = null;
+        try {
+            metrics = new MetricsLite(this);
+        } catch (IOException ex) {
+            getLogger().log(Level.WARNING, "Unable to create Metrics", ex);
+        }
+        if (metrics != null) {
+            metrics.start();
+        }
     }
 
     @Override
